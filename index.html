@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Firebase</title>
+    <style>label{display: inline-block; width: 80px}
+        input, select {width:120px}
+    </style>
+</head>
+<body>
+    <label>Nome</label><input id="Nomebox" type="text"><br><br>
+    <label>RollNo</label><input id="Roolbox" type="text"><br><br>
+    <label>Sezione</label><input id="Setbox" type="text"><br><br>
+    <label>Genere:</label>
+    <select name="" id="Genbox">
+
+        <option value="Maschio">Maschio</option>
+        <option value="Femmina">Femmina</option>
+    </select>
+
+    <hr>
+    <button id="Insbtn">Inserisci</button>
+    <button id="Selbtn">Seleziona</button>
+    <button id="Updbtn">Aggiorna</button>
+    <button id="Delbtn">Elimina</button>
+
+<!-------------------------CONFIGURAZIONE FIREBASE --------------------------------------------------->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyBSdoBwdnk14U1WbGeY_qaKXRIVg7qYD9s",
+          authDomain: "fir-db-9e604.firebaseapp.com",
+          projectId: "fir-db-9e604",
+          storageBucket: "fir-db-9e604.appspot.com",
+          messagingSenderId: "412927301959",
+          appId: "1:412927301959:web:7efc3113a41922598ad462"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+
+     import {
+         getFirestore, doc, getDoc, setDoc, collection, addDoc, updateDoc, deleteDoc, deleteField
+     }
+     from "https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore.js";
+
+     const db = getFirestore(); 
+
+     //------------------------- REFERENCE  ---------------------------------------------------//
+
+     let NomeBox = document.getElementById("Nomebox");
+     let RollBox = document.getElementById("Rollbox");
+     let SetBox = document.getElementById("Setbox");
+     let GenBox = document.getElementById("Genbox");
+
+     let InsBtn = document.getElementById("Insbtn");
+     let SelBtn = document.getElementById("Selbtn");
+     let UpdBtn = document.getElementById("Updbtn");
+     let DelBtn = document.getElementById("Delbtn");
+
+     //-------------------------CONFIGURAZIONE FIREBASE ---------------------------------------------------//
+
+        async function AddDocument_AutoID() {
+            let ref = collection(db, "ListaStudenti");
+
+            const docRef = await addDoc(
+                ref = {
+                    NomeStud: NomeBox.value,
+                    RollNo: RollBox.value,
+                    Sezione: SetBox.value,
+                    Genere: GenBox.value
+                }
+            )
+
+            .then(() => {
+                alert("dati aggiunti con successo!");
+            })
+            .catch((error) => {
+                alert("Errori durante inserimento, errore : "+ error);
+            }); 
+        }
+
+     //------------------------- EVENTI SU BUTTONI  ---------------------------------------------------//
+
+     InsBtn.addEventListener("click", AddDocument_AutoID);
+
+
+
+      </script>
+
+</body>
+</html>
